@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Suite de Posicionamiento • PIXEL</title>
+    <meta name="description" content="Herramienta profesional de análisis SEO y posicionamiento digital con datos reales de Google."/>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NMY0SHD0XZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NMY0SHD0XZ');
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --fondo-crema: #F5F1E8; --rojo-acento: #C6341E; --gris-oscuro: #4A4A4A;
+            --linea-clara: #E0DACE; --texto-claro: #F5F1E8; --fondo-oscuro: #1E1E1E;
+            --verde: #22C55E; --amarillo: #F59E0B; --rojo: #EF4444;
+        }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--fondo-crema); color: var(--gris-oscuro); font-family: 'IBM Plex Mono', monospace; -webkit-font-smoothing: antialiased; }
+        .headline { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--rojo-acento); line-height: 1.1; }
+        .btn { background-color: var(--rojo-acento); color: var(--fondo-crema); border: 1px solid var(--rojo-acento); cursor: pointer; padding: 0.8rem 1.5rem; border-radius: 999px; font-family: 'Inter', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.3s ease; display: inline-block; }
+        .btn:hover { background-color: var(--fondo-oscuro); border-color: var(--fondo-oscuro); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-secondary { background-color: transparent; color: var(--rojo-acento); }
+        .btn-sm { padding: 0.4rem 1rem; font-size: 0.75rem; }
+        .input { background-color: transparent; border: 1px solid var(--linea-clara); color: var(--gris-oscuro); padding: 0.85rem 1rem; border-radius: 4px; width: 100%; transition: border-color 0.2s; }
+        .input:focus { outline: none; border-color: var(--rojo-acento); }
+        .card { background-color: var(--fondo-crema); border: 1px solid var(--linea-clara); border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .tab-btn { padding-bottom: 0.75rem; border-bottom: 3px solid transparent; color: var(--gris-oscuro); font-family: 'Inter', sans-serif; font-weight: 600; transition: all .2s ease; opacity: 0.7; }
+        .tab-btn.active { border-color: var(--rojo-acento); color: var(--rojo-acento); opacity: 1; }
+        .tab-pane { display:none; } .tab-pane.active { display:block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .loader { width: 42px; height: 42px; border: 4px solid rgba(0,0,0,0.1); border-top-color: var(--rojo-acento); border-radius: 9999px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .prose h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--rojo-acento); margin: 1.5rem 0 .5rem; }
+        .prose h4 { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700; margin: 1.2rem 0 .4rem; }
+        .prose p { margin: .8rem 0; line-height: 1.7; } .prose strong { color: var(--gris-oscuro); font-weight: 600; }
+        .prose ul { list-style: disc; padding-left: 1.5rem; } .prose li { margin: .3rem 0; line-height: 1.6; }
+        .status-good { color: var(--verde); font-weight:600; } .status-review { color: var(--amarillo); font-weight:600; } .status-bad { color: var(--rojo); font-weight: 600; }
+        .title-highlight { background-color: var(--rojo-acento); color: var(--texto-claro); padding: 0.2em 0.4em; line-height: 1.5; display: inline; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+        .badge-real { display:inline-flex; align-items:center; gap:4px; background:#dcfce7; color:#166534; font-size:0.65rem; font-weight:700; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:0.05em; }
+        .badge-ai { display:inline-flex; align-items:center; gap:4px; background:#fef3c7; color:#92400e; font-size:0.65rem; font-weight:700; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:0.05em; }
+        .keyword-chip { display:inline-block; background:white; border:1px solid var(--linea-clara); border-radius:999px; padding:0.4rem 1rem; font-size:0.85rem; margin:0.2rem; transition:all .2s; cursor:default; }
+        .keyword-chip:hover { border-color:var(--rojo-acento); transform:translateY(-1px); box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+        ::-webkit-scrollbar { width:6px; } ::-webkit-scrollbar-track { background:#F5F1E8; }
+        ::-webkit-scrollbar-thumb { background:#E0DACE; } ::-webkit-scrollbar-thumb:hover { background:#C6341E; }
+        @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        .slide-up { animation: slideUp 0.5s ease-out both; }
+    </style>
+</head>
+
+<body>
+    <header class="sticky top-0 left-0 right-0 z-40 bg-[var(--fondo-crema)]/80 backdrop-blur-sm border-b border-[var(--linea-clara)]">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="headline text-2xl">Suite IA</span>
+                <span class="badge-real">● Datos Reales</span>
+            </div>
+            <button id="change-config" class="text-sm font-semibold text-[var(--gris-oscuro)] hover:text-[var(--rojo-acento)] underline">Configuración</button>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 pt-12 pb-10">
+        <section class="card p-6 mb-6">
+            <div class="grid md:grid-cols-5 gap-4 items-end">
+                <div class="md:col-span-3">
+                    <h1 class="headline text-4xl"><span class="title-highlight">Posicionamiento Inteligente</span></h1>
+                    <p id="main-subtitle" class="text-sm text-gray-500 mt-2">Análisis para: —</p>
+                </div>
+                <div class="md:col-span-2">
+                    <div class="flex gap-2">
+                        <input id="keyword-input" class="input" placeholder="Ej: zapatillas deportivas, software crm..."/>
+                        <button id="search-button" class="btn">Analizar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="initial-state" class="card p-8 text-center">
+            <p class="text-gray-500">Ingresa una palabra clave para comenzar el análisis con datos reales de Google.</p>
+        </section>
+
+        <section id="results-container" class="hidden">
+            <div class="border-b border-[var(--linea-clara)] mb-4">
+                <nav class="flex gap-6 text-sm font-semibold overflow-x-auto">
+                    <button class="tab-btn active whitespace-nowrap" data-tab="summary">Resumen</button>
+                    <button class="tab-btn whitespace-nowrap" data-tab="keywords">Keywords Reales</button>
+                    <button class="tab-btn whitespace-nowrap" data-tab="content">Preguntas Reales</button>
+                    <button class="tab-btn whitespace-nowrap" data-tab="blog">Creador de Artículos</button>
+                    <button class="tab-btn whitespace-nowrap" data-tab="estado">Auditoría Web</button>
+                </nav>
+            </div>
+
+            <div id="tab-summary" class="tab-pane active">
+                <div id="strategic-summary" class="card p-6"><div class="loader"></div></div>
+                <div id="product-suggestions" class="mt-4"></div>
+            </div>
+
+            <div id="tab-keywords" class="tab-pane">
+                <div class="card p-6 mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="headline text-xl">Keywords de Google Suggest</h3>
+                        <span class="badge-real">● Fuente: Google Autocomplete</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mb-4">Estas son las sugerencias reales que Google muestra cuando los usuarios escriben tu keyword. Ordenadas por relevancia (posición en Suggest).</p>
+                    <div id="keywordsCloud" class="flex flex-wrap gap-1"></div>
+                </div>
+                <div class="card overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm">
+                            <thead class="bg-gray-50 text-[var(--gris-oscuro)] border-b border-[var(--linea-clara)]">
+                                <tr><th class="text-left px-6 py-3 font-semibold">Keyword</th><th class="text-left px-6 py-3 font-semibold">Relevancia</th><th class="text-left px-6 py-3 font-semibold">Tipo</th><th class="text-left px-6 py-3 font-semibold">Fuente</th></tr>
+                            </thead>
+                            <tbody id="mainRow" class="divide-y divide-[var(--linea-clara)]"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-content" class="tab-pane">
+                <div class="card p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="headline text-2xl">Preguntas Reales (AEO)</h3>
+                        <span class="badge-real">● Fuente: Google Suggest</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">Preguntas que los usuarios realmente buscan en Google sobre este tema.</p>
+                    <ul id="paaList" class="mt-4 space-y-4"></ul>
+                </div>
+                <div class="card p-6 mt-4">
+                    <h3 class="headline text-xl">Schema (FAQPage) para SEO</h3>
+                    <p class="text-gray-500 text-sm">Copia este código JSON-LD en tu página para mejorar tu visibilidad.</p>
+                    <div class="mt-3 relative">
+                        <pre id="schemaBox" class="bg-gray-100 border border-[var(--linea-clara)] rounded-lg p-3 overflow-x-auto text-xs text-gray-600">{}</pre>
+                        <button id="copySchema" class="absolute top-2 right-2 text-xs border border-[var(--linea-clara)] rounded px-2 py-1 bg-white hover:bg-gray-50">Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-blog" class="tab-pane">
+                <div class="card p-6 text-center">
+                    <h3 class="headline text-xl mb-1">Creador de Artículos</h3>
+                    <span class="badge-ai mb-3">▲ Generado por IA</span>
+                    <p class="text-gray-500 mb-4">Genera un borrador de artículo optimizado para SEO basado en keywords reales.</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <label class="inline-flex items-center gap-2 text-sm text-gray-600"><input id="blog-global-toggle" type="checkbox" class="scale-110 accent-[var(--rojo-acento)]"><span>Contenido global</span></label>
+                        <button id="genBlog" class="btn">Generar Borrador</button>
+                    </div>
+                </div>
+                <div id="blogLoader" class="hidden card p-6 mt-4"><div class="loader"></div></div>
+                <div id="blogOut" class="mt-4 hidden"><div class="card p-6 relative"><button id="copyBlog" class="absolute top-2 right-2 text-xs border border-[var(--linea-clara)] rounded px-2 py-1 bg-white hover:bg-gray-50">Copiar HTML</button><div id="blogHTML" class="prose max-w-none"></div></div></div>
+            </div>
+
+            <div id="tab-estado" class="tab-pane">
+                <div id="estado-help" class="card p-8 text-center hidden"><p class="text-gray-500">Añade la URL de tu sitio web en <button class="underline font-bold" onclick="openModal()">Configuración</button> para activar la auditoría.</p></div>
+                <div id="estado-content" class="hidden">
+                    <div class="card p-6">
+                        <div class="flex flex-wrap items-center gap-3 mb-4">
+                            <span class="bg-gray-200 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full" id="chip-url">URL: —</span>
+                            <span class="bg-gray-200 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full" id="chip-perf">Performance: —</span>
+                            <span class="bg-gray-200 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full" id="chip-seo">SEO Técnico: —</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm">
+                                <thead class="bg-gray-50 text-[var(--gris-oscuro)] border-b border-[var(--linea-clara)]"><tr><th class="text-left px-6 py-3 font-semibold">Métrica</th><th class="text-left px-6 py-3 font-semibold">Valor</th><th class="text-left px-6 py-3 font-semibold">Estado</th></tr></thead>
+                                <tbody id="webVitalsRows" class="divide-y divide-[var(--linea-clara)]"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card p-6 mt-4">
+                        <div id="estado-loader" class="hidden"><div class="loader"></div><p class="text-center mt-2 text-sm text-gray-500">Generando diagnóstico estratégico...</p></div>
+                        <div id="estado-ia" class="prose max-w-none"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="config-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
+        <div class="card max-w-2xl w-full p-6 bg-[var(--fondo-crema)]">
+            <h3 class="headline text-xl mb-1">Centro de Mando</h3>
+            <p class="text-gray-500 mb-4">Completa estos datos para personalizar el análisis.</p>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div><label class="text-sm font-semibold">Tu Empresa</label><input id="company-name-input" class="input" placeholder="Nombre de tu empresa"/></div>
+                <div><label class="text-sm font-semibold">Tu Sector</label><input id="company-sector-input" class="input" placeholder="Ej: E-commerce, Software, etc."/></div>
+                <div>
+                    <label class="text-sm font-semibold">País Objetivo</label>
+                    <select id="country-select" class="input">
+                        <option value="" disabled selected>Selecciona un país</option>
+                        <optgroup label="América Latina">
+                            <option value="Argentina">Argentina</option><option value="Bolivia">Bolivia</option><option value="Brasil">Brasil</option><option value="Chile">Chile</option><option value="Colombia">Colombia</option><option value="Costa Rica">Costa Rica</option><option value="Ecuador">Ecuador</option><option value="El Salvador">El Salvador</option><option value="Guatemala">Guatemala</option><option value="Honduras">Honduras</option><option value="México">México</option><option value="Nicaragua">Nicaragua</option><option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Perú">Perú</option><option value="República Dominicana">República Dominicana</option><option value="Uruguay">Uruguay</option><option value="Venezuela">Venezuela</option>
+                        </optgroup>
+                        <optgroup label="Norteamérica"><option value="Estados Unidos">Estados Unidos</option><option value="Canadá">Canadá</option></optgroup>
+                        <optgroup label="Europa"><option value="España">España</option><option value="Reino Unido">Reino Unido</option><option value="Alemania">Alemania</option><option value="Francia">Francia</option><option value="Italia">Italia</option><option value="Portugal">Portugal</option></optgroup>
+                        <optgroup label="Global"><option value="Global">Global (Inglés)</option></optgroup>
+                    </select>
+                </div>
+                <div><label class="text-sm font-semibold">Tu Sitio Web (URL)</label><input id="site-url-input" class="input" placeholder="https://tuempresa.com"/></div>
+                <div class="md:col-span-2"><label class="text-sm font-semibold">Productos/Servicios (Opcional)</label><textarea id="products-input" rows="3" class="input" placeholder="Formato: Nombre, triggers, URL&#10;Ej: Servicio SEO, seo para empresas, https://..."></textarea></div>
+            </div>
+            <div class="mt-6 flex gap-2 justify-end">
+                <button id="closeConfig" class="btn btn-secondary">Cancelar</button>
+                <button id="save-config-button" class="btn btn-primary">Guardar y Empezar</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  /* ==================== Analytics ==================== */
+  function trackEvent(n, p = {}) { if (typeof gtag === 'function') gtag('event', n, p); }
+
+  /* ==================== Helpers ==================== */
+  const stripHtml = (s = '') => (s || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const copyText = t => navigator.clipboard.writeText(t);
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const GEMINI_KEY = 'AIzaSyDRS39gX1nlmNXF-2LrIHldR4gmFA6LXyc';
+  const todayStr = () => new Date().toLocaleDateString('es-PE', { year:'numeric', month:'long', day:'numeric' });
+  const COUNTRY_CODES = {'Argentina':'ar','Bolivia':'bo','Brasil':'br','Chile':'cl','Colombia':'co','Costa Rica':'cr','Ecuador':'ec','El Salvador':'sv','Guatemala':'gt','Honduras':'hn','México':'mx','Nicaragua':'ni','Panamá':'pa','Paraguay':'py','Perú':'pe','República Dominicana':'do','Uruguay':'uy','Venezuela':'ve','Estados Unidos':'us','Canadá':'ca','España':'es','Reino Unido':'uk','Alemania':'de','Francia':'fr','Italia':'it','Portugal':'pt','Global':'us'};
+  const COUNTRY_LANGS = {'Brasil':'pt','Alemania':'de','Francia':'fr','Italia':'it','Portugal':'pt','Reino Unido':'en','Estados Unidos':'en','Canadá':'en','Global':'en'};
+
+  /* ==================== UI Elements ==================== */
+  const els = {
+    changeConfig: document.getElementById('change-config'), modal: document.getElementById('config-modal'),
+    saveBtn: document.getElementById('save-config-button'), closeConfig: document.getElementById('closeConfig'),
+    kInput: document.getElementById('keyword-input'), sBtn: document.getElementById('search-button'),
+    initial: document.getElementById('initial-state'), results: document.getElementById('results-container'),
+    mainSubtitle: document.getElementById('main-subtitle'), summaryBox: document.getElementById('strategic-summary'),
+    prodSug: document.getElementById('product-suggestions'), schemaBox: document.getElementById('schemaBox'),
+    copySchema: document.getElementById('copySchema'), genBlog: document.getElementById('genBlog'),
+    blogLoader: document.getElementById('blogLoader'), blogOut: document.getElementById('blogOut'),
+    blogHTML: document.getElementById('blogHTML'), blogGlobal: document.getElementById('blog-global-toggle'),
+    chipPerf: document.getElementById('chip-perf'), chipSEO: document.getElementById('chip-seo'),
+    chipURL: document.getElementById('chip-url'), vitalsRows: document.getElementById('webVitalsRows'),
+    estadoIA: document.getElementById('estado-ia'), estadoLoader: document.getElementById('estado-loader'),
+    estadoHelp: document.getElementById('estado-help'), estadoContent: document.getElementById('estado-content'),
+    paaList: document.getElementById('paaList'), mainRow: document.getElementById('mainRow'),
+    keywordsCloud: document.getElementById('keywordsCloud'),
+  };
+  const state = { config: null, kw: '', relevant: [], realKeywords: [], realQuestions: [], estadoLoaded: false };
+
+  /* ==================== Modal ==================== */
+  const openModal = () => { els.modal.classList.remove('hidden'); els.modal.classList.add('flex'); };
+  window.openModal = openModal;
+  const closeModal = () => { els.modal.classList.add('hidden'); els.modal.classList.remove('flex'); };
+
+  function loadConfig() {
+    try { state.config = JSON.parse(localStorage.getItem('pixelSuiteConfig_v2') || 'null'); } catch { state.config = null; }
+    if (state.config) {
+      document.getElementById('company-name-input').value = state.config.name || '';
+      document.getElementById('company-sector-input').value = state.config.sector || '';
+      document.getElementById('country-select').value = state.config.country || 'Perú';
+      document.getElementById('site-url-input').value = state.config.siteUrl || '';
+      document.getElementById('products-input').value = state.config.productsText || '';
+      els.mainSubtitle.textContent = `Análisis para: ${state.config.sector || '—'} • ${state.config.country || '—'}`;
+    } else { openModal(); }
+  }
+
+  function parseProducts(text) {
+    if (!text) return [];
+    return text.split('\n').map(l => l.trim()).filter(Boolean).map(line => {
+      const parts = line.split(',');
+      if (parts.length < 3) return null;
+      const name = parts.shift().trim();
+      const url = parts.pop().trim();
+      const triggers = parts.join(',').toLowerCase().split(/;|,/).map(s => s.trim()).filter(Boolean);
+      return { name, url, triggers };
+    }).filter(Boolean);
+  }
+
+  function saveConfig() {
+    const name = document.getElementById('company-name-input').value.trim();
+    const sector = document.getElementById('company-sector-input').value.trim();
+    const country = document.getElementById('country-select').value;
+    const siteUrl = document.getElementById('site-url-input').value.trim();
+    const productsText = document.getElementById('products-input').value.trim();
+    state.config = { name, sector, country, siteUrl, productsText, products: parseProducts(productsText) };
+    localStorage.setItem('pixelSuiteConfig_v2', JSON.stringify(state.config));
+    els.mainSubtitle.textContent = `Análisis para: ${sector || '—'} • ${country || '—'}`;
+    trackEvent('save_config');
+    closeModal();
+    if (state.estadoLoaded) runSiteAudit();
+  }
+
+  els.changeConfig.onclick = openModal;
+  els.closeConfig.onclick = closeModal;
+  els.saveBtn.onclick = saveConfig;
+
+  /* ==================== Tabs ==================== */
+  document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => {
+    const id = b.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(x => x.classList.toggle('active', x.dataset.tab === id));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'tab-' + id));
+    if (id === 'estado' && !state.estadoLoaded) runSiteAudit();
+  }));
+  loadConfig();
+
+  /* ==================== GOOGLE SUGGEST API (REAL DATA via JSONP) ==================== */
+  let jsonpCounter = 0;
+  function googleSuggest(query) {
+    return new Promise((resolve) => {
+      const gl = COUNTRY_CODES[state.config?.country] || 'us';
+      const hl = COUNTRY_LANGS[state.config?.country] || 'es';
+      const callbackName = '_gsc_' + (jsonpCounter++);
+      const timeout = setTimeout(() => { cleanup(); resolve([]); }, 5000);
+      function cleanup() { clearTimeout(timeout); delete window[callbackName]; const el = document.getElementById(callbackName); if (el) el.remove(); }
+      window[callbackName] = function(data) { cleanup(); resolve(data[1] || []); };
+      const script = document.createElement('script');
+      script.id = callbackName;
+      script.src = `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(query)}&hl=${hl}&gl=${gl}&callback=${callbackName}`;
+      script.onerror = () => { cleanup(); resolve([]); };
+      document.head.appendChild(script);
+    });
+  }
+
+  async function fetchRealKeywords(keyword) {
+    const prefixes = ['', 'mejor ', 'mejores ', 'como ', 'donde ', 'que ', 'cual ', 'tipos de ', 'beneficios de ', 'ventajas de ', 'diferencia entre ', 'alternativas a ', 'opiniones de ', 'reseñas de ', 'comparativa de '];
+    const suffixes = [' precio', ' opiniones', ' online', ' cerca', ' barato', ' profesional', ' 2025', ' 2026', ' gratis', ' premium', ' para empresas', ' para principiantes', ' vs', ' alternativas', ' beneficios', ' recomendaciones'];
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    const allQueries = [
+      keyword,
+      ...prefixes.map(p => p + keyword),
+      ...suffixes.map(s => keyword + s),
+      ...alphabet.map(l => keyword + ' ' + l),
+    ];
+    // Process in batches of 10 to avoid overwhelming
+    const batchSize = 10;
+    const seen = new Set();
+    const keywords = [];
+    for (let i = 0; i < allQueries.length; i += batchSize) {
+      const batch = allQueries.slice(i, i + batchSize);
+      const results = await Promise.all(batch.map(q => googleSuggest(q)));
+      results.forEach((suggestions, batchIdx) => {
+        const queryIdx = i + batchIdx;
+        suggestions.forEach((kw, pos) => {
+          const normalized = kw.toLowerCase().trim();
+          if (!seen.has(normalized)) {
+            seen.add(normalized);
+            const isQuestion = /^(cómo|como|qué|que es|por qué|cuándo|dónde|cuál|para qué|cuanto|es mejor)/i.test(kw);
+            keywords.push({
+              keyword: kw,
+              relevance: queryIdx === 0 ? (10 - pos) : Math.max(1, 8 - Math.floor(queryIdx / 5) - pos),
+              type: isQuestion ? 'Pregunta' : (queryIdx === 0 ? 'Principal' : 'Relacionada'),
+              source: 'Google Suggest'
+            });
+          }
+        });
+      });
+    }
+    keywords.sort((a, b) => b.relevance - a.relevance);
+    return keywords;
+  }
+
+  async function fetchRealQuestions(keyword) {
+    const questionPrefixes = [
+      `cómo ${keyword}`, `qué es ${keyword}`, `por qué ${keyword}`,
+      `cuándo ${keyword}`, `dónde ${keyword}`, `cuál ${keyword}`,
+      `para qué ${keyword}`, `${keyword} cómo`, `${keyword} qué`,
+      `es bueno ${keyword}`, `se puede ${keyword}`, `cuánto cuesta ${keyword}`,
+      `vale la pena ${keyword}`, `${keyword} es`, `${keyword} sirve`,
+      `${keyword} funciona`, `como elegir ${keyword}`, `como usar ${keyword}`,
+    ];
+    const batchSize = 9;
+    const seen = new Set();
+    const questions = [];
+    for (let i = 0; i < questionPrefixes.length; i += batchSize) {
+      const batch = questionPrefixes.slice(i, i + batchSize);
+      const results = await Promise.all(batch.map(q => googleSuggest(q)));
+      results.forEach(suggestions => {
+        suggestions.forEach(s => {
+          const norm = s.toLowerCase().trim();
+          if (!seen.has(norm)) {
+            seen.add(norm);
+            questions.push({ q: s });
+          }
+        });
+      });
+    }
+    return questions;
+  }
+
+  /* ==================== GEMINI API (only for content generation) ==================== */
+  async function geminiCall(systemPrompt, userQuery) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+    const payload = {
+      contents: [{ parts: [{ text: userQuery }] }],
+      systemInstruction: { parts: [{ text: systemPrompt }] },
+      generationConfig: { responseMimeType: 'text/plain' }
+    };
+    try {
+      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const j = await r.json();
+      if (!r.ok || j.error) throw new Error(j?.error?.message || 'Error de API');
+      const parts = j?.candidates?.[0]?.content?.parts || [];
+      return parts.map(p => p.text).filter(Boolean).join('\n').replace(/^\s*```(?:\w+)?\s*|```\s*$/g, '').trim();
+    } catch (e) { console.error("Gemini Error:", e); throw new Error("Error al generar contenido con IA. Verifica tu API key."); }
+  }
+
+  async function buildSummary(realKeywords, realQuestions) {
+    const system = `Eres el Director de Estrategia de la agencia Pixel. Fecha del informe: ${todayStr()}. Redacta un resumen ejecutivo claro y accionable en español. Formato HTML usando <h3>, <p>, <ul>, <li> y <strong>. NO inventes datos numéricos. Basa tu análisis en las keywords y preguntas reales proporcionadas. Incluye la fecha actual en el encabezado del informe.`;
+    const rel = (state.relevant || []).map(p => p.name).join(', ') || 'ninguno';
+    const topKws = realKeywords.slice(0, 15).map(k => k.keyword).join(', ');
+    const topQs = realQuestions.slice(0, 8).map(q => q.q).join('; ');
+    const user = `Keyword principal: "${state.kw}" para ${state.config.country}.
+Keywords reales de Google Suggest (en orden de relevancia): ${topKws}.
+Preguntas reales que buscan los usuarios: ${topQs}.
+Productos/servicios del cliente relacionados: ${rel}.
+Sector: ${state.config.sector}.
+Redacta: 1) <h3>Diagnóstico</h3> con análisis de la demanda real basada en los datos, 2) <h3>Oportunidades</h3> con estrategia basada en las keywords y preguntas reales, 3) <h3>Plan de Acción</h3> con pasos concretos.`;
+    return await geminiCall(system, user);
+  }
+
+  async function buildAnswer(question) {
+    const system = `Eres un Copywriter experto en "${state.config.sector}". Responde de manera concisa y experta (100-140 palabras). HTML: <p>, <strong>, <ul>, <li>.`;
+    const prod = state.relevant[0]?.name ? `Si es relevante, menciona la solución: ${state.relevant[0].name}.` : '';
+    return await geminiCall(system, `Responde para audiencia en ${state.config.country}: "${question}". ${prod}`);
+  }
+
+  async function buildBlog(keyword, isGlobal) {
+    const system = `Eres un Experto en Content Marketing y SEO. Crea un artículo de alta calidad. HTML: <h3>, <p>, <strong>, <ul>, <li>. Estructura: Título, Intro, 2-3 secciones, Puntos Clave, Conclusión.`;
+    const realKws = state.realKeywords.slice(0, 8).map(k => k.keyword).join(', ');
+    const geo = isGlobal ? 'Audiencia global.' : `Audiencia en ${state.config.country}.`;
+    return await geminiCall(system, `Artículo 450-600 palabras para "${keyword}". ${geo} Integra naturalmente estas keywords reales: ${realKws}`);
+  }
+
+  /* ==================== WEB AUDIT (REAL SCRAPING) ==================== */
+  async function fetchTextWithFallback(u) {
+    try { const r = await fetch(u, { mode: 'cors' }); if (r.ok) return await r.text(); } catch {}
+    try { const r2 = await fetch(`https://r.jina.ai/${u}`); if (r2.ok) return await r2.text(); } catch {}
+    throw new Error('El sitio web bloquea el análisis por CORS.');
+  }
+
+  function heuristicSeoScore(data) {
+    let s = 100;
+    if (!data.title) s -= 15; else if (data.title.length < 30 || data.title.length > 65) s -= 5;
+    if (!data.description) s -= 15; else if (data.description.length < 70 || data.description.length > 160) s -= 5;
+    if (data.h1Count !== 1) s -= 10;
+    if (!data.canonical) s -= 5;
+    if (data.robotsMeta && /noindex/i.test(data.robotsMeta)) s -= 40;
+    if (!data.lang) s -= 5;
+    if (!data.jsonldCount) s -= 5;
+    if (data.images > 0) { const ratio = data.imagesWithoutAlt / data.images; if (ratio > 0.5) s -= 10; else if (ratio > 0.2) s -= 5; }
+    if (data.robots?.found && data.robots.disallowAll) s -= 10;
+    if (!data.sitemap?.found) s -= 5;
+    return clamp(Math.round(s), 0, 100);
+  }
+
+  async function auditUrl(target) {
+    const url = target.startsWith('http') ? target : 'https://' + target;
+    const u = new URL(url);
+    const html = await fetchTextWithFallback(url);
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const title = doc.querySelector('title')?.innerText || null;
+    const description = doc.querySelector('meta[name="description"]')?.content || null;
+    const robotsMeta = doc.querySelector('meta[name="robots"]')?.content || null;
+    const canonical = doc.querySelector('link[rel="canonical"]')?.href || null;
+    const lang = doc.documentElement.lang || null;
+    const h1s = Array.from(doc.querySelectorAll('h1')).map(h => h.innerText.trim());
+    const images = doc.querySelectorAll('img');
+    const imagesWithoutAlt = Array.from(images).filter(img => !img.alt?.trim()).length;
+    const wordCount = stripHtml(doc.body?.textContent || '').split(/\s+/).filter(Boolean).length;
+    let internalLinks = 0, externalLinks = 0;
+    doc.querySelectorAll('a[href]').forEach(a => { try { const l = new URL(a.href, u.origin); if (l.hostname === u.hostname) internalLinks++; else externalLinks++; } catch {} });
+    const jsonldCount = doc.querySelectorAll('script[type="application/ld+json"]').length;
+    let robots = { found: false, disallowAll: false, sitemaps: [] };
+    try { const rTxt = await fetchTextWithFallback(new URL('/robots.txt', u.origin).href); robots.found = true; robots.disallowAll = /Disallow:\s*\/\s*$/im.test(rTxt); robots.sitemaps = (rTxt.match(/Sitemap:\s*(.+)/ig) || []).map(l => l.replace(/Sitemap:\s*/i, '').trim()); } catch {}
+    let sitemap = { found: false, urlsCount: 0 };
+    const smUrls = robots.sitemaps.length ? robots.sitemaps : [new URL('/sitemap.xml', u.origin).href];
+    try { const smTxt = await fetchTextWithFallback(smUrls[0]); sitemap.found = true; sitemap.urlsCount = (smTxt.match(/<url>/g) || []).length; } catch {}
+    return { ok: true, url: u.href, lang, title, description, robotsMeta, canonical, h1Count: h1s.length, firstH1: h1s[0] || null, wordCount, images: images.length, imagesWithoutAlt, internalLinks, externalLinks, jsonldCount, robots, sitemap };
+  }
+
+  async function fetchPageSpeed(siteUrl) {
+    try {
+      const url = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(siteUrl)}&strategy=mobile&category=performance&category=seo`;
+      const r = await fetch(url);
+      if (!r.ok) return null;
+      const data = await r.json();
+      const lhr = data.lighthouseResult;
+      if (!lhr) return null;
+      return {
+        performanceScore: Math.round((lhr.categories?.performance?.score || 0) * 100),
+        seoScore: Math.round((lhr.categories?.seo?.score || 0) * 100),
+        fcp: lhr.audits?.['first-contentful-paint']?.displayValue || '—',
+        lcp: lhr.audits?.['largest-contentful-paint']?.displayValue || '—',
+        cls: lhr.audits?.['cumulative-layout-shift']?.displayValue || '—',
+        tbt: lhr.audits?.['total-blocking-time']?.displayValue || '—',
+        si: lhr.audits?.['speed-index']?.displayValue || '—',
+        fcpNum: lhr.audits?.['first-contentful-paint']?.numericValue || 0,
+        lcpNum: lhr.audits?.['largest-contentful-paint']?.numericValue || 0,
+        clsNum: lhr.audits?.['cumulative-layout-shift']?.numericValue || 0,
+        tbtNum: lhr.audits?.['total-blocking-time']?.numericValue || 0,
+      };
+    } catch (e) { console.warn('PageSpeed error:', e); return null; }
+  }
+
+  async function runSiteAudit() {
+    if (!state.config?.siteUrl) { els.estadoHelp.classList.remove('hidden'); els.estadoContent.classList.add('hidden'); return; }
+    els.estadoHelp.classList.add('hidden');
+    els.estadoContent.classList.remove('hidden');
+    els.estadoLoader.classList.remove('hidden');
+    els.estadoIA.innerHTML = '';
+    state.estadoLoaded = true;
+    trackEvent('run_site_audit', { url: state.config.siteUrl });
+
+    try {
+      const [data, psData] = await Promise.all([auditUrl(state.config.siteUrl), fetchPageSpeed(state.config.siteUrl)]);
+      els.chipURL.textContent = 'URL: ' + data.url.replace(/^https?:\/\//, '');
+      const score = heuristicSeoScore(data);
+      els.chipSEO.textContent = 'SEO Técnico: ' + score + ' / 100';
+      els.chipPerf.textContent = psData ? 'Performance: ' + psData.performanceScore + ' / 100' : 'Performance: N/A (agrega API Key)';
+
+      const getStatus = (val, goodFn, reviewFn) => {
+        if (goodFn(val)) return ['Bueno', 'status-good'];
+        if (reviewFn && reviewFn(val)) return ['Revisar', 'status-review'];
+        return ['Falta', 'status-bad'];
+      };
+      const rows = [
+        ['Título', data.title || '—', getStatus(data.title, t => t && t.length >= 30 && t.length <= 65, t => t)],
+        ['Meta Description', data.description || '—', getStatus(data.description, d => d && d.length >= 70 && d.length <= 160, d => d)],
+        ['H1 (cantidad)', String(data.h1Count), getStatus(data.h1Count, c => c === 1, c => c > 1)],
+        ['Canonical URL', data.canonical ? 'Presente' : 'Ausente', getStatus(data.canonical, c => c, () => false)],
+        ['Meta Robots', data.robotsMeta || 'Permisivo', getStatus(data.robotsMeta, r => !/noindex/i.test(r), r => /noindex/i.test(r))],
+        ['Schema (JSON-LD)', String(data.jsonldCount), getStatus(data.jsonldCount, c => c > 0, () => false)],
+        [`Imágenes sin 'alt'`, `${data.imagesWithoutAlt}/${data.images}`, getStatus(data.images > 0 ? data.imagesWithoutAlt / data.images : 0, r => r <= 0.1, r => r > 0.1)],
+        ['robots.txt', data.robots.found ? (data.robots.disallowAll ? 'Bloquea Todo' : 'OK') : 'No Encontrado', getStatus(data.robots, r => r.found && !r.disallowAll, r => !r.found)],
+        ['sitemap.xml', data.sitemap.found ? `${data.sitemap.urlsCount} URLs` : 'No Encontrado', getStatus(data.sitemap.found, f => f, () => false)],
+        ['Idioma (lang)', data.lang || '—', getStatus(data.lang, l => l, () => false)],
+      ];
+      if (psData) {
+        rows.push(
+          ['─── Core Web Vitals ───', '', ['', '']],
+          ['First Contentful Paint', psData.fcp, getStatus(psData.fcpNum, v => v <= 1800, v => v <= 3000)],
+          ['Largest Contentful Paint', psData.lcp, getStatus(psData.lcpNum, v => v <= 2500, v => v <= 4000)],
+          ['Cumulative Layout Shift', psData.cls, getStatus(psData.clsNum, v => v <= 0.1, v => v <= 0.25)],
+          ['Total Blocking Time', psData.tbt, getStatus(psData.tbtNum, v => v <= 200, v => v <= 600)],
+          ['Speed Index', psData.si, getStatus(psData.fcpNum, v => v <= 3400, v => v <= 5800)],
+        );
+      }
+      els.vitalsRows.innerHTML = rows.map(r => `<tr><td class="px-6 py-3 ${r[0].startsWith('───') ? 'font-bold text-[var(--rojo-acento)]' : ''}">${r[0]}</td><td class="px-6 py-3">${r[1]}</td><td class="px-6 py-3"><span class="${r[2][1]}">${r[2][0]}</span></td></tr>`).join('');
+
+      {
+        const system = `Eres el Auditor SEO Senior de la agencia Pixel. Fecha del informe: ${todayStr()}. Redacta un informe profesional basado en datos REALES proporcionados. HTML: <h3>, <h4>, <p>, <ul>, <li>, <strong>. Estructura: 1) Diagnóstico General (incluye fecha) 2) Plan de Acción Priorizado 3) Siguientes Acciones. Al final sugiere contactar a Pixel para implementar las mejoras.`;
+        const auditData = { ...data };
+        if (psData) auditData.pageSpeed = psData;
+        const html = await geminiCall(system, `Informe de auditoría para ${data.url}. Datos REALES: ${JSON.stringify(auditData)}. Sector: "${state.config.sector}" en "${state.config.country}".`);
+        els.estadoIA.innerHTML = html;
+      }
+    } catch (e) {
+      els.estadoIA.innerHTML = `<p class="text-red-500 font-bold">${e.message}</p>`;
+    } finally { els.estadoLoader.classList.add('hidden'); }
+  }
+
+  /* ==================== MAIN SEARCH ==================== */
+  els.sBtn.onclick = run;
+  els.kInput.addEventListener('keypress', e => e.key === 'Enter' && run());
+
+  function renderLoader(msg) {
+    els.results.classList.remove('hidden');
+    els.initial.classList.add('hidden');
+    els.summaryBox.innerHTML = `<div class="loader"></div><p class="text-center text-gray-500 mt-3">${msg || 'Analizando...'}</p>`;
+    els.prodSug.innerHTML = '';
+    els.mainRow.innerHTML = '';
+    els.paaList.innerHTML = '';
+    els.keywordsCloud.innerHTML = '';
+  }
+
+  async function run() {
+    state.kw = els.kInput.value.trim();
+    if (!state.kw) { alert('Por favor, ingresa una palabra clave.'); return; }
+    state.relevant = (state.config?.products || []).filter(p => p.triggers.some(t => state.kw.toLowerCase().includes(t)));
+    renderLoader(`Obteniendo datos reales de Google para "${state.kw}"...`);
+    trackEvent('analyze_keyword', { keyword: state.kw });
+
+    try {
+      // Step 1: Fetch REAL data from Google Suggest
+      const [realKeywords, realQuestions] = await Promise.all([
+        fetchRealKeywords(state.kw),
+        fetchRealQuestions(state.kw)
+      ]);
+      state.realKeywords = realKeywords;
+      state.realQuestions = realQuestions;
+
+      // Step 2: Render real keywords immediately
+      renderKeywords(realKeywords);
+      renderPAA(realQuestions);
+
+      // Step 3: Generate AI summary
+      const resumen = await buildSummary(realKeywords, realQuestions);
+      els.summaryBox.innerHTML = `<div class="flex items-center gap-2 mb-3"><span class="badge-real">● Datos Reales de Google</span><span class="text-xs text-gray-400">${todayStr()} • ${realKeywords.length} keywords • ${realQuestions.length} preguntas</span></div><div class="prose max-w-none">${resumen}</div>`;
+
+      // Product suggestions + CTA
+      if (state.relevant.length) {
+        els.prodSug.innerHTML = `<div class="card p-6 mt-4 slide-up"><h4 class="headline text-xl mb-2">Oportunidades de Producto/Servicio</h4>${state.relevant.map(p => `<a class="block underline hover:text-[var(--rojo-acento)]" target="_blank" href="${p.url}">${p.name}</a>`).join('')}</div>`;
+      }
+      els.prodSug.insertAdjacentHTML('beforeend', `<div class="card p-6 mt-4 slide-up"><h2 class="headline text-2xl">¿Listo para Actuar?</h2><p class="text-gray-600 mt-2">La estrategia es el primer paso. La ejecución lo es todo.</p><a href="https://cotizacion-umber.vercel.app/" target="_blank" onclick="trackEvent('click_cta_services');" class="btn mt-4 !font-bold !px-6 !py-3">Ver Nuestros Servicios</a><a href="https://wa.link/xau053" target="_blank" onclick="trackEvent('click_cta_whatsapp');" class="btn btn-secondary mt-4 ml-2 !font-bold !px-6 !py-3">Contactar por WhatsApp</a></div>`);
+      state.estadoLoaded = false;
+    } catch (e) {
+      els.summaryBox.innerHTML = `<div class="text-red-500 font-bold p-4 text-center">${e.message}</div>`;
+    }
+  }
+
+  function renderKeywords(keywords) {
+    // Cloud view
+    els.keywordsCloud.innerHTML = keywords.slice(0, 30).map(k => {
+      const size = k.relevance >= 8 ? 'text-base font-bold' : k.relevance >= 5 ? 'text-sm' : 'text-xs';
+      return `<span class="keyword-chip ${size}">${k.keyword}</span>`;
+    }).join('');
+    // Table view
+    els.mainRow.innerHTML = keywords.map(k => {
+      const relBar = `<div class="w-20 h-2 rounded bg-gray-200"><div class="h-2 rounded" style="width:${k.relevance * 10}%;background:${k.relevance >= 7 ? 'var(--verde)' : k.relevance >= 4 ? 'var(--amarillo)' : 'var(--rojo)'}"></div></div>`;
+      const typeColor = k.type === 'Principal' ? 'text-[var(--rojo-acento)] font-bold' : k.type === 'Pregunta' ? 'text-blue-600' : 'text-gray-600';
+      return `<tr class="hover:bg-gray-50"><td class="px-6 py-3 font-semibold">${k.keyword}</td><td class="px-6 py-3"><div class="flex items-center gap-2"><span class="text-xs">${k.relevance}/10</span>${relBar}</div></td><td class="px-6 py-3"><span class="${typeColor} text-xs">${k.type}</span></td><td class="px-6 py-3"><span class="badge-real text-[0.6rem]">● Google</span></td></tr>`;
+    }).join('');
+  }
+
+  function renderPAA(questions) {
+    els.paaList.innerHTML = (questions || []).map(q => {
+      const safeQ = (q.q || '').replace(/"/g, '&quot;');
+      return `<li class="border-b border-[var(--linea-clara)] pb-3"><div class="flex items-center justify-between gap-4"><div class="flex items-center gap-2"><span class="font-semibold">${q.q}</span><span class="badge-real text-[0.55rem]">● Google</span></div><button class="btn btn-sm text-xs" onclick="developAnswer(this, '${safeQ}')">Generar Respuesta</button></div><div class="answer mt-2 hidden prose max-w-none text-sm text-gray-600"></div></li>`;
+    }).join('');
+
+    const schema = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": (questions || []).map(q => ({ "@type": "Question", "name": q.q, "acceptedAnswer": { "@type": "Answer", "text": `Encuentra la respuesta detallada sobre ${state.kw} en nuestra guía completa.` } })) };
+    els.schemaBox.textContent = JSON.stringify(schema, null, 2);
+    els.copySchema.onclick = () => copyText(els.schemaBox.textContent).then(() => { els.copySchema.textContent = '¡Copiado!'; setTimeout(() => els.copySchema.textContent = 'Copiar', 1500); });
+  }
+
+  window.developAnswer = async function (btn, question) {
+    const box = btn.closest('li').querySelector('.answer');
+    box.classList.remove('hidden');
+    box.innerHTML = '<div class="loader !w-6 !h-6"></div><p class="text-xs">Generando respuesta IA...</p>';
+    try {
+      const html = await buildAnswer(question);
+      box.innerHTML = `<span class="badge-ai mb-2">▲ Respuesta IA</span><div class="prose max-w-none text-sm">${html}</div>`;
+    } catch (e) { box.innerHTML = `<p class="text-red-500 font-bold">${e.message}</p>`; }
+  };
+
+  els.genBlog.onclick = async () => {
+    if (!state.kw) { alert('Primero analiza una palabra clave.'); return; }
+    els.blogLoader.classList.remove('hidden');
+    els.blogOut.classList.add('hidden');
+    els.blogHTML.innerHTML = '';
+    trackEvent('generate_blog_draft', { keyword: state.kw });
+    try {
+      const isGlobal = !!(els.blogGlobal && els.blogGlobal.checked);
+      const html = await buildBlog(state.kw, isGlobal);
+      els.blogHTML.innerHTML = html;
+      els.blogOut.classList.remove('hidden');
+      document.getElementById('copyBlog').onclick = () => copyText(els.blogHTML.innerHTML).then(() => { const b = document.getElementById('copyBlog'); b.textContent = '¡Copiado!'; setTimeout(() => b.textContent = 'Copiar HTML', 1500); });
+    } catch (e) { els.blogHTML.innerHTML = `<p class="text-red-500 font-bold">${e.message}</p>`; els.blogOut.classList.remove('hidden'); }
+    els.blogLoader.classList.add('hidden');
+  };
+});
+</script>
+</body>
+</html>
