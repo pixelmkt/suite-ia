@@ -596,9 +596,14 @@ Redacta: 1) <h3>Diagnóstico</h3> con análisis de la demanda real basada en los
       renderKeywords(realKeywords);
       renderPAA(realQuestions);
 
-      // Step 3: Generate AI summary
-      const resumen = await buildSummary(realKeywords, realQuestions);
-      els.summaryBox.innerHTML = `<div class="flex items-center gap-2 mb-3"><span class="badge-real">● Datos Reales de Google</span><span class="text-xs text-gray-400">${todayStr()} • ${realKeywords.length} keywords • ${realQuestions.length} preguntas</span></div><div class="prose max-w-none">${resumen}</div>`;
+      // Step 3: Generate AI summary (non-blocking)
+      try {
+        const resumen = await buildSummary(realKeywords, realQuestions);
+        els.summaryBox.innerHTML = `<div class="flex items-center gap-2 mb-3"><span class="badge-real">● Datos Reales de Google</span><span class="text-xs text-gray-400">${todayStr()} • ${realKeywords.length} keywords • ${realQuestions.length} preguntas</span></div><div class="prose max-w-none">${resumen}</div>`;
+      } catch (aiErr) {
+        console.warn('Gemini summary error:', aiErr);
+        els.summaryBox.innerHTML = `<div class="prose max-w-none"><h3 style="color:var(--rojo-acento)">Datos Reales Obtenidos — ${todayStr()}</h3><p>Se encontraron <strong>${realKeywords.length} keywords</strong> y <strong>${realQuestions.length} preguntas</strong> reales de Google Suggest para "<strong>${state.kw}</strong>" en ${state.config?.country || 'tu país'}.</p><p class="text-sm text-gray-500">El resumen con IA no está disponible en este momento. Consulta las pestañas de Keywords y Preguntas para ver todos los datos reales.</p></div>`;
+      }
 
       // Product suggestions + CTA
       if (state.relevant.length) {
