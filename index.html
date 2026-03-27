@@ -207,6 +207,7 @@
                 </div>
                 <div><label class="text-sm font-semibold">Tu Sitio Web (URL)</label><input id="site-url-input" class="input" placeholder="https://tuempresa.com"/></div>
                 <div class="md:col-span-2"><label class="text-sm font-semibold">Productos/Servicios (Opcional)</label><textarea id="products-input" rows="3" class="input" placeholder="Formato: Nombre, triggers, URL&#10;Ej: Servicio SEO, seo para empresas, https://..."></textarea></div>
+                <div class="md:col-span-2"><label class="text-sm font-semibold">Clave API de Google AI (Gemini)</label><input id="api-key-input" type="password" class="input" placeholder="Pega aquí tu clave API de Google AI Studio"/><small class="text-gray-500">Necesaria para resúmenes IA, artículos y diagnósticos. <a href="https://aistudio.google.com/app/apikey" target="_blank" class="underline text-[var(--rojo-acento)]">Obtener API Key gratis →</a></small></div>
             </div>
             <div class="mt-6 flex gap-2 justify-end">
                 <button id="closeConfig" class="btn btn-secondary">Cancelar</button>
@@ -262,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('country-select').value = state.config.country || 'Perú';
       document.getElementById('site-url-input').value = state.config.siteUrl || '';
       document.getElementById('products-input').value = state.config.productsText || '';
+      document.getElementById('api-key-input').value = state.config.apiKey || '';
       els.mainSubtitle.textContent = `Análisis para: ${state.config.sector || '—'} • ${state.config.country || '—'}`;
     } else { openModal(); }
   }
@@ -283,8 +285,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const sector = document.getElementById('company-sector-input').value.trim();
     const country = document.getElementById('country-select').value;
     const siteUrl = document.getElementById('site-url-input').value.trim();
+    const apiKey = document.getElementById('api-key-input').value.trim();
     const productsText = document.getElementById('products-input').value.trim();
-    state.config = { name, sector, country, siteUrl, productsText, products: parseProducts(productsText) };
+    state.config = { name, sector, country, siteUrl, apiKey, productsText, products: parseProducts(productsText) };
     localStorage.setItem('pixelSuiteConfig_v2', JSON.stringify(state.config));
     els.mainSubtitle.textContent = `Análisis para: ${sector || '—'} • ${country || '—'}`;
     trackEvent('save_config');
@@ -391,7 +394,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ==================== GEMINI API (only for content generation) ==================== */
   async function geminiCall(systemPrompt, userQuery) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+    const activeKey = state.config?.apiKey || GEMINI_KEY;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${activeKey}`;
     const payload = {
       contents: [{ parts: [{ text: userQuery }] }],
       systemInstruction: { parts: [{ text: systemPrompt }] },
